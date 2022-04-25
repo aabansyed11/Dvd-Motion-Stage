@@ -1,29 +1,65 @@
+//Written with the help of Imaad Syed and Dr. Lafe Spietz
+
 #include <Stepper.h>
 
-// pins 12, 11, 9, 8 refer to stepper motor
-Stepper step1(200, 12, 11, 9, 8);
+int delayus = 150;
+int dirPin3 = 8;
+int stepPin3 = 9;
+int enPin3 = 10;
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
-  
-  // pins 3, 5 refer to brushed DC motor
-  pinMode(3, OUTPUT);
-  pinMode(5, OUTPUT);
-  step1.setSpeed(100);
+    Serial.begin(9600);
+    pinMode(3, OUTPUT);
+    pinMode(5, OUTPUT);
+
+
+    pinMode(dirPin3,OUTPUT);
+    pinMode(stepPin3,OUTPUT);
+    pinMode(enPin3,OUTPUT);
+
+
+    digitalWrite(dirPin3,LOW);
+    digitalWrite(stepPin3,LOW);
+    digitalWrite(enPin3,HIGH);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  
-  // spinning the stage
+
   digitalWrite(5, LOW);
-  analogWrite(3, 145);
+  analogWrite(3, 175);
+  //delay(100);
 
-  // controlling the stepper motor
-  step1.step(2000);
-  delay(500);
+  moveUp(400);
+  delay(400);
+  moveDown(400);
+  delay(400);
 
-  step1.step(-2000);
-  delay(500);
+}
+
+void moveDown(int nSteps){
+      digitalWrite(dirPin3,LOW);
+     digitalWrite(enPin3,LOW);
+     
+     for(int index = 0;index < nSteps;index++){
+       digitalWrite(stepPin3,HIGH);
+       delayMicroseconds(delayus); 
+       digitalWrite(stepPin3,LOW);
+       delayMicroseconds(delayus); 
+     }          
+     digitalWrite(enPin3,HIGH);   
+}
+
+void moveUp(int nSteps){
+     digitalWrite(dirPin3,HIGH);
+     digitalWrite(enPin3,LOW);
+     
+     for(int index = 0;index < nSteps;index++){
+       digitalWrite(stepPin3,HIGH);
+       delayMicroseconds(delayus); 
+       digitalWrite(stepPin3,LOW);
+       delayMicroseconds(delayus); 
+     }          
+     digitalWrite(enPin3,HIGH);    
 }
