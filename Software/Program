@@ -1,9 +1,10 @@
 #include <Stepper.h>
-
+// pins 12, 11, 9, 8 refer to stepper motor
 Stepper step1(200, 12, 11, 9, 8);
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  // pins 3, 5 refer to brushed DC motor
   pinMode(3, OUTPUT);
   pinMode(5, OUTPUT);
   step1.setSpeed(100);
